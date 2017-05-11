@@ -3,6 +3,7 @@ import {ErrorHandler, NgModule} from '@angular/core';
 import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
 import {IonicStorageModule} from '@ionic/storage';
 import {TokenService} from '../providers/token-service';
+import {AuthService} from '../providers/auth-service';
 
 import { HttpModule } from '@angular/http';
 
@@ -29,7 +30,8 @@ import {SplashScreen} from '@ionic-native/splash-screen';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    TokenService
+    TokenService,
+    AuthService
   ]
 })
 export class AppModule {}

@@ -1,10 +1,10 @@
 import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams, MenuController} from 'ionic-angular';
 import {TokenService} from '../../providers/token-service';
+import {AuthService} from '../../providers/auth-service';
 import {Validators, FormBuilder, FormGroup} from '@angular/forms';
 
-import {Http} from '@angular/http';
-import 'rxjs/add/operator/map';
+
 
 @IonicPage()
 @Component({
@@ -21,7 +21,7 @@ export class LoginPage {
     public menuCtrl: MenuController,
     public tokenService: TokenService,
     private formBuilder: FormBuilder,
-    private http: Http) {
+    public authService: AuthService) {
 
     this.loginData = this.formBuilder.group({
       username: ['', Validators.required],
@@ -37,16 +37,22 @@ export class LoginPage {
 
   login() {
 
-    this.http
-      .get('http://localhost:3000/users?email=' + this.loginData.value.username + '&password=' + this.loginData.value.password)
-      .map(res => res.json()).subscribe(data => {
-        if (data && data[0] && data[0].id) {
+    this.authService.login(this.loginData.value).map(rs => rs.json()).subscribe(
+      data => {
+        if (data && data.id) {
           this.tokenService.setToken('zxcvbnmlkjhgfdsa').then(() => {
+            this.authService.setUser(data);
+
             this.navCtrl.setRoot('HomePage');
             this.menuCtrl.enable(true);
+
           });
         }
-      });
+      },
+      err => {
+        console.log("err", err)
+      }
+    );
 
 
     //use this.loginData.value to authenticate the user
