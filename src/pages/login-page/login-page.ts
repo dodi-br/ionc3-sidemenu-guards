@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams, MenuController} from 'ionic-angular';
 import {TokenService} from '../../providers/token-service';
 import {Validators, FormBuilder, FormGroup} from '@angular/forms';
+import {AuthService} from '../../providers/auth-service';
 
 @IonicPage()
 @Component({
@@ -17,7 +18,8 @@ export class LoginPage {
     public navParams: NavParams,
     public menuCtrl: MenuController,
     public tokenService: TokenService,
-    private formBuilder: FormBuilder) {
+    private formBuilder: FormBuilder,
+    public authService: AuthService) {
 
     this.loginData = this.formBuilder.group({
       username: ['', Validators.required],
@@ -32,13 +34,15 @@ export class LoginPage {
   }
 
   login() {
-    
+
     //use this.loginData.value to authenticate the user
-    
-    this.tokenService.setToken('zxcvbnmlkjhgfdsa').then(() => {
-      this.navCtrl.setRoot('HomePage');
-      this.menuCtrl.enable(true);
-    });
+
+    this.authService.login()
+      .then(() => {
+        this.navCtrl.setRoot('HomePage');
+        this.menuCtrl.enable(true);
+      })
+      .catch(e => console.log("login error", e))
 
   }
 }

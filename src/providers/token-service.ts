@@ -8,19 +8,19 @@ export class TokenService {
 
   setToken(token_id: string) {
     return this.storage.ready().then(() =>
-      this.storage.set('token_id', token_id)
+      this.storage.set('id_token', token_id)
     );
   }
 
   getToken() {
     return this.storage.ready().then(() =>
-      this.storage.get('token_id')
+      this.storage.get('id_token')
     );
   }
 
   deleteToken() {
     return this.storage.ready().then(() =>
-      this.storage.remove('token_id')
+      this.storage.remove('id_token')
     );
   }
 
