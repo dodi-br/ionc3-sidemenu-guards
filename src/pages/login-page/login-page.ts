@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams, MenuController} from 'ionic-angular';
 import {TokenService} from '../../providers/token-service';
+import {Validators, FormBuilder, FormGroup} from '@angular/forms';
 
 @IonicPage()
 @Component({
@@ -9,7 +10,20 @@ import {TokenService} from '../../providers/token-service';
 })
 export class LoginPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController, public tokenService: TokenService) {
+  private loginData: FormGroup;
+
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public menuCtrl: MenuController,
+    public tokenService: TokenService,
+    private formBuilder: FormBuilder) {
+
+    this.loginData = this.formBuilder.group({
+      username: ['', Validators.required],
+      password: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
+    });
+
   }
 
   ionViewDidLoad() {
@@ -18,6 +32,9 @@ export class LoginPage {
   }
 
   login() {
+    
+    //use this.loginData.value to authenticate the user
+    
     this.tokenService.setToken('zxcvbnmlkjhgfdsa').then(() => {
       this.navCtrl.setRoot('HomePage');
       this.menuCtrl.enable(true);

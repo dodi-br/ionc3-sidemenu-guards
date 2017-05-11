@@ -10,11 +10,16 @@ import {TokenService} from '../providers/token-service';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = 'HomePage';
+  rootPage: any = 'LoginPage';
 
   pages: Array<{title: string, component: any, method?: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public tokenService: TokenService) {
+  constructor(
+    public platform: Platform,
+    public statusBar: StatusBar,
+    public splashScreen: SplashScreen,
+    public tokenService: TokenService) {
+
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -25,6 +30,10 @@ export class MyApp {
       {title: 'Logout', method: 'logout', component: 'LoginPage'}
     ];
 
+  }
+  
+  ngOnInit() {
+    this.tokenService.deleteToken();
   }
 
   initializeApp() {
