@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 import {AuthHttp} from 'angular2-jwt';
-import {TokenService} from './token-service';
+import {Storage} from '@ionic/storage';
 import 'rxjs/add/operator/toPromise';
 
 
@@ -13,7 +13,7 @@ export class AuthService {
   idToken: string;
 
   constructor(
-    private tokenService: TokenService,
+    private storage: Storage,
     private http: Http,
     private authHttp: AuthHttp) {
 
@@ -25,7 +25,7 @@ export class AuthService {
       .toPromise()
       .then(data => {
         this.user = data.json();
-        this.tokenService.setToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ");
+        this.storage.set("id_token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ");
         return true;
       });
 
@@ -34,7 +34,7 @@ export class AuthService {
   logout() {
     this.authHttp
       .delete('https://jsonplaceholder.typicode.com/users/1')
-      .subscribe(() => this.tokenService.deleteToken());
+      .subscribe(() => this.storage.remove('id_token'));
   }
 
 

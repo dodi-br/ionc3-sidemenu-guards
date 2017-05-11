@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams, MenuController} from 'ionic-angular';
-import {TokenService} from '../../providers/token-service';
+import {Storage} from '@ionic/storage';
 import {Validators, FormBuilder, FormGroup} from '@angular/forms';
 import {AuthService} from '../../providers/auth-service';
 
@@ -17,7 +17,7 @@ export class LoginPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public menuCtrl: MenuController,
-    public tokenService: TokenService,
+    public storage: Storage,
     private formBuilder: FormBuilder,
     public authService: AuthService) {
 

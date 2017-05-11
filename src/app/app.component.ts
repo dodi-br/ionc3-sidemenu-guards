@@ -2,7 +2,7 @@ import {Component, ViewChild} from '@angular/core';
 import {Nav, Platform} from 'ionic-angular';
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
-import {TokenService} from '../providers/token-service';
+import {Storage} from '@ionic/storage';
 
 @Component({
   templateUrl: 'app.html'
@@ -18,7 +18,7 @@ export class MyApp {
     public platform: Platform,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
-    public tokenService: TokenService) {
+    public storage: Storage) {
 
     this.initializeApp();
 
@@ -33,7 +33,7 @@ export class MyApp {
   }
   
   ngOnInit() {
-    this.tokenService.deleteToken();
+    this.storage.remove('id_token');
   }
 
   initializeApp() {
@@ -48,7 +48,7 @@ export class MyApp {
   openPage(page) {
 
     if (page.method && page.method == 'logout') {
-      this.tokenService.deleteToken();
+      this.storage.remove('id_token');
     }
 
     // Reset the content nav to have just this page
