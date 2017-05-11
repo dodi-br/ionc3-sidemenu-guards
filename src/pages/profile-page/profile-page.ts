@@ -23,7 +23,7 @@ export class ProfilePage extends ProtectedPage {
     
     super(navCtrl, navParams, storage)
     
-    this.profile = this.authService.user;
+    this.profile = this.storage.get('user');
     
   }
 

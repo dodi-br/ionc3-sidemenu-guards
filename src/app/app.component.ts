@@ -3,6 +3,7 @@ import {Nav, Platform} from 'ionic-angular';
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {Storage} from '@ionic/storage';
+import {AuthService} from '../providers/auth-service';
 
 @Component({
   templateUrl: 'app.html'
@@ -12,13 +13,14 @@ export class MyApp {
 
   rootPage: any = 'LoginPage';
 
-  pages: Array<{title: string, component: any, method?: any}>;
+  pages: Array<{title: string, component: string, method?: string}>;
 
   constructor(
     public platform: Platform,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
-    public storage: Storage) {
+    public storage: Storage,
+    public authService: AuthService) {
 
     this.initializeApp();
 
@@ -45,10 +47,10 @@ export class MyApp {
     });
   }
 
-  openPage(page) {
+  openPage(page: any) {
 
     if (page.method && page.method == 'logout') {
-      this.storage.remove('id_token');
+      this.authService.logout();
     }
 
     // Reset the content nav to have just this page
