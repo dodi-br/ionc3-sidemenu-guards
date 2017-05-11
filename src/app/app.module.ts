@@ -4,6 +4,8 @@ import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
 import {IonicStorageModule} from '@ionic/storage';
 import {TokenService} from '../providers/token-service';
 
+import { HttpModule } from '@angular/http';
+
 import {MyApp} from './app.component';
 
 import {StatusBar} from '@ionic-native/status-bar';
@@ -16,7 +18,8 @@ import {SplashScreen} from '@ionic-native/splash-screen';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    HttpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
